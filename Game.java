@@ -34,23 +34,23 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room recibidor, cocina, baño, comedor, Habitacion;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        recibidor = new Room("en el recibidor de la casa");
+        cocina = new Room("en la cocina de la casa");
+        baño = new Room("en el baño de la casa");
+        comedor = new Room("en el  comedor de la casa");
+        Habitacion = new Room("en la habitacion de la casa");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        recibidor.setExits(null, cocina, comedor, baño);
+        cocina.setExits(null, null, null, recibidor);
+        baño.setExits(null, recibidor, null, null);
+        comedor.setExits(recibidor, Habitacion, null, null);
+        Habitacion.setExits(null, null, null, comedor);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = recibidor;  // start game outside
     }
 
     /**
@@ -68,7 +68,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Gracias por jugar.  Hasta la proxima.");
     }
 
     /**
@@ -77,12 +77,12 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido al mundo de zuul");
+        System.out.println("El mundo de zuul es un nuevo, juego de aventuras increiblemente aburrido");
+        System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
+        System.out.println("Tu estas " + currentRoom.getDescription());
+        System.out.print("Salidas: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
         }
@@ -176,7 +176,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            System.out.println("Tu estas " + currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
                 System.out.print("north ");
