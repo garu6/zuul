@@ -14,12 +14,12 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southeastExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room southeastExit;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -60,5 +60,77 @@ public class Room
     {
         return description;
     }
+    
+    public Room getExit(String direction){
+        Room roomSalida = null;
+        
+        if (direction.equals("north")){
+            roomSalida=northExit;
+            
+        }
+        
+        if (direction.equals("south")){
+            roomSalida=southExit;
+            
+        }
+        
+        
+        if (direction.equals("east")){
+            roomSalida =eastExit;
+            
+        }
+        
+        if (direction.equals("west")){
+            roomSalida =westExit;
+            
+        }
+        
+        if (direction.equals("southeast")){
+            roomSalida=southeastExit;
 
+        }
+        
+        return roomSalida;
+        
+        
+    }
+    
+    
+        /**
+	 * Return a description of the room's exits.
+	 * For example: "Exits: north east west"
+	 *
+	 * @ return A description of the available exits.
+	 */
+
+    public String getExitString(){
+        String salida = "Salidas: ";
+        
+        
+        if(northExit != null) {
+            salida += "north ";
+        }
+        
+        if(eastExit != null) {
+            salida += "east ";
+        }
+        
+        if(southExit != null){
+            salida += "south ";
+        }
+        
+        if(westExit != null){
+            salida += "west ";
+            
+        }
+        
+        if(southeastExit != null){
+            salida += "southeast ";
+            
+        }
+        
+        
+        return salida;
+    }
+    
 }
