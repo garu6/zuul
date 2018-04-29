@@ -44,6 +44,7 @@ public class Game
         Habitacion = new Room("en la habitacion de la casa");
         Despensa = new Room ("en la despensa de la casa");
         Sotano = new Room ("en el sotano de la casa");
+        
         // initialise room exits
         recibidor.setExits(null, cocina, comedor, baño,null,null);
         cocina.setExits(null, null, null, recibidor,null,null);
