@@ -46,12 +46,25 @@ public class Game
         Sotano = new Room ("en el sotano de la casa");
         
         // initialise room exits
-        recibidor.setExits(null, cocina, comedor, baño,null,null);
-        cocina.setExits(null, null, null, recibidor,null,null);
-        baño.setExits(null, recibidor, null, null,null,null);
-        comedor.setExits(recibidor, Habitacion, null, null, Despensa,Sotano);
-        Habitacion.setExits(null, null, null, comedor,null,null);
-        Sotano.setExits(null,null,cocina,null,comedor,null);
+        recibidor.setExit("east",cocina);
+        recibidor.setExit("south",comedor);
+        recibidor.setExit("west",baño);
+        
+        cocina.setExit("west",recibidor);
+        baño.setExit("atajo",Habitacion);
+        baño.setExit("east",recibidor);
+        
+        comedor.setExit("north",recibidor);
+        comedor.setExit("east",Habitacion);
+        comedor.setExit("southeast",Despensa);
+        comedor.setExit("northeast",Sotano);
+        
+        Habitacion.setExit("west",comedor);
+        
+        Sotano.setExit("south",cocina);
+        Sotano.setExit("southeast",comedor);
+        
+        
         currentRoom = recibidor;  // start game outside
     }
 
