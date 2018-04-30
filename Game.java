@@ -127,6 +127,10 @@ public class Game
             look();
             
         }
+        else if (commandWord.equals("eat")){
+            eat();
+            
+        }
 
         return wantToQuit;
     }
@@ -204,6 +208,12 @@ public class Game
     
     private void look(){
         System.out.println(currentRoom.getLongDescription());
+        
+    }
+    
+    
+    private void eat(){
+        System.out.println("acabas de comer y ya no tienes hambre");
         
     }
 }
