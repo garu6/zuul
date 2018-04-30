@@ -123,6 +123,10 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("look")){
+            look();
+            
+        }
 
         return wantToQuit;
     }
@@ -194,6 +198,12 @@ public class Game
         
         System.out.println();
         
+        
+    }
+    
+    
+    private void look(){
+        System.out.println(currentRoom.getLongDescription());
         
     }
 }
