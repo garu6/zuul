@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+    private Room volver;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,6 +27,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        volver = null;
     }
 
     /**
@@ -68,12 +69,14 @@ public class Game
         //añadimos los objetos a las salas
         
         Habitacion.addItem("hacha",15);
-        comedor.addItem("casco",20);
-        Sotano.addItem("vela",5);
         Habitacion.addItem("cama",50);
+        
+        Sotano.addItem("vela",5);     
         Sotano.addItem("botella",1);
         
-        
+        comedor.addItem("casco",20);
+        comedor.addItem("mesa",50);
+        comedor.addItem("silla",10);
         
         currentRoom = recibidor;  // start game outside
     }
@@ -140,6 +143,8 @@ public class Game
         else if (commandWord.equals("eat")){
             eat();
             
+        }else if (commandWord.equals("back")){
+            back();
         }
 
         return wantToQuit;
@@ -185,6 +190,7 @@ public class Game
             System.out.println("Aqui no hay puerta estas atrapado");
         }
         else {
+            volver = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
         }
@@ -225,5 +231,23 @@ public class Game
     private void eat(){
         System.out.println("acabas de comer y ya no tienes hambre");
         
+    }
+    
+    
+     /**
+     * Metodo que devuelve al jugador a la ultima sala en la que estuvo.
+     * Al iniciar la partida y cuando intenta invocarse dos veces seguidas
+     * avisa de que no es posible llevar a cabo la accion.
+     */
+    private void back() 
+    {
+        if(volver == null){
+            System.out.println("¡No puedes volver atrás!"); 
+        }
+        else{
+            currentRoom = volver;
+            volver = null;
+            printLocationInfo();
+        }
     }
 }

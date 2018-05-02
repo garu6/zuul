@@ -20,20 +20,26 @@ public class Item
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * muestra la informacion del objeto
+     * @retrun la descripcion del objeto en un String
      */
     public String getItemDescripcion()
     {
        return itemDescripcion;
     }
-    
+    /**
+     * muestra el peso del objeto
+     * @return el peso con un entero
+     */
     
     public int getitemPeso(){
         return itemPeso;
     }
+    
+    /**
+     * devuelve la informacion del objeto y su peso
+     * @return la informacion del objeto como cadena
+     */
     
     public String DescripcionEntera(){
         String resultado = " --> " + itemDescripcion +  " " + itemPeso +  " " + "kg";

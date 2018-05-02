@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class Room 
 {
     private String description;
-
     private HashMap <String,Room> salidas;
     private ArrayList <Item> items;
     /**
@@ -79,6 +78,7 @@ public class Room
      */
     public String getLongDescription(){
         String itemsLongDescription = (items.isEmpty())?"":"Hay " + items.size() + " objetos en la sala:\n";
+        
         
         for(Item item : items){
             itemsLongDescription += item.DescripcionEntera() + "\n";
