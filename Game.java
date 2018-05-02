@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room volver;
+    private Stack<Room>salasPasadas;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,7 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        volver = null;
+        salasPasadas = new Stack<>();
     }
 
     /**
@@ -36,7 +37,7 @@ public class Game
     private void createRooms()
     {
         Room recibidor, cocina, baño, comedor, Habitacion, Despensa, Sotano;
-      
+
         // create the rooms
         recibidor = new Room("en el recibidor de la casa");
         cocina = new Room("en la cocina de la casa");
@@ -45,39 +46,37 @@ public class Game
         Habitacion = new Room("en la habitacion de la casa");
         Despensa = new Room ("en la despensa de la casa");
         Sotano = new Room ("en el sotano de la casa");
-        
+
         // initialise room exits
         recibidor.setExit("east",cocina);
         recibidor.setExit("south",comedor);
         recibidor.setExit("west",baño);
-        
+
         cocina.setExit("west",recibidor);
         baño.setExit("atajo",Habitacion);
         baño.setExit("east",recibidor);
-        
+
         comedor.setExit("north",recibidor);
         comedor.setExit("east",Habitacion);
         comedor.setExit("southeast",Despensa);
         comedor.setExit("northeast",Sotano);
-        
+
         Habitacion.setExit("west",comedor);
-        
+
         Sotano.setExit("south",cocina);
         Sotano.setExit("southeast",comedor);
-        
-        
+
         //añadimos los objetos a las salas
-        
         Habitacion.addItem("hacha",15);
         Habitacion.addItem("cama",50);
-        
+
         Sotano.addItem("vela",5);     
         Sotano.addItem("botella",1);
-        
+
         comedor.addItem("casco",20);
         comedor.addItem("mesa",50);
         comedor.addItem("silla",10);
-        
+
         currentRoom = recibidor;  // start game outside
     }
 
@@ -90,7 +89,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -138,11 +137,11 @@ public class Game
         }
         else if (commandWord.equals("look")){
             look();
-            
+
         }
         else if (commandWord.equals("eat")){
             eat();
-            
+
         }else if (commandWord.equals("back")){
             back();
         }
@@ -181,16 +180,14 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        
-        
+
         Room nextRoom = currentRoom.getExit(direction);
-        
         
         if (nextRoom == null) {
             System.out.println("Aqui no hay puerta estas atrapado");
         }
         else {
-            volver = currentRoom;
+            salasPasadas.push(currentRoom);
             currentRoom = nextRoom;
             printLocationInfo();
         }
@@ -211,42 +208,37 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
-    
-    
+
     private void printLocationInfo(){
         System.out.println(currentRoom.getLongDescription());
-        
+
         System.out.println();
-        
-        
+
     }
-    
     
     private void look(){
         System.out.println(currentRoom.getLongDescription());
-        
+
     }
-    
-    
+
     private void eat(){
         System.out.println("acabas de comer y ya no tienes hambre");
-        
+
     }
-    
-    
-     /**
+
+    /**
      * Metodo que devuelve al jugador a la ultima sala en la que estuvo.
      * Al iniciar la partida y cuando intenta invocarse dos veces seguidas
      * avisa de que no es posible llevar a cabo la accion.
      */
     private void back() 
     {
-        if(volver == null){
-            System.out.println("¡No puedes volver atrás!"); 
+        if(salasPasadas.empty()){
+            System.out.println("¡No puedes volver atrás,estas en el comienzo del juego!"); 
         }
         else{
-            currentRoom = volver;
-            volver = null;
+            currentRoom = salasPasadas.pop();
+            
             printLocationInfo();
         }
     }
