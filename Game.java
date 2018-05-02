@@ -148,7 +148,7 @@ public class Game
         System.out.println("En una casa en llamas");
         System.out.println();
         System.out.println("Tus comandos de palabras son:");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
     }
 
     /** 
