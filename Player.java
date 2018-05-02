@@ -154,6 +154,7 @@ public class Player
                 System.out.println(item. DescripcionEntera());
             }            
             
+            
             System.out.println("Peso total: " + pesoActual + " kg");
         }
     }
