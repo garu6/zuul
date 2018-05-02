@@ -10,13 +10,15 @@ public class Item
     // instance variables - replace the example below with your own
     private String itemDescripcion;
     private int itemPeso; 
+    private boolean coger;
     /**
      * Constructor for objects of class Item
      */
-    public Item(String descripcionObjeto, int pesoObjeto)
+    public Item(String descripcionObjeto, int pesoObjeto, boolean coger)
     {
         itemDescripcion = descripcionObjeto;
         itemPeso = pesoObjeto;
+        this.coger = coger;
     }
 
     /**
@@ -44,5 +46,11 @@ public class Item
     public String DescripcionEntera(){
         String resultado = " --> " + itemDescripcion +  " " + itemPeso +  " " + "kg";
         return resultado;
+    }
+    
+    
+    public boolean getCoger(){
+        return coger;
+        
     }
 }

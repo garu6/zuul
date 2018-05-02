@@ -82,6 +82,7 @@ public class Room
         
         for(Item item : items){
             itemsLongDescription += item.DescripcionEntera() + "\n";
+            
        }
         
         return "Tu estas " + getDescription() + ".\n" + getExitString() + ".\n" + itemsLongDescription;
@@ -91,10 +92,15 @@ public class Room
      * añade el objeto al listado de objetos que tiene la sala
      */
 
-    public void addItem(String descripcion, int peso ){
-        items.add(new Item(descripcion,peso));
-
+    public void addItem(String descripcion, int peso , boolean coger){
+        items.add(new Item(descripcion,peso, coger));
+        
     }
-
+    
+    
+    public ArrayList<Item> getItems(){
+        return items;
+        
+    }
 }
 
