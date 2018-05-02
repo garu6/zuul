@@ -37,13 +37,13 @@ public class Game
         Room recibidor, cocina, baño, comedor, Habitacion, Despensa, Sotano;
       
         // create the rooms
-        recibidor = new Room("en el recibidor de la casa",null);
-        cocina = new Room("en la cocina de la casa",null);
-        baño = new Room("en el baño de la casa",null);
-        comedor = new Room("en el  comedor de la casa",null);
-        Habitacion = new Room("en la habitacion de la casa",new Item("hacha",15));
-        Despensa = new Room ("en la despensa de la casa",null);
-        Sotano = new Room ("en el sotano de la casa",new Item("vela", 5));
+        recibidor = new Room("en el recibidor de la casa");
+        cocina = new Room("en la cocina de la casa");
+        baño = new Room("en el baño de la casa");
+        comedor = new Room("en el  comedor de la casa");
+        Habitacion = new Room("en la habitacion de la casa");
+        Despensa = new Room ("en la despensa de la casa");
+        Sotano = new Room ("en el sotano de la casa");
         
         // initialise room exits
         recibidor.setExit("east",cocina);
@@ -63,6 +63,16 @@ public class Game
         
         Sotano.setExit("south",cocina);
         Sotano.setExit("southeast",comedor);
+        
+        
+        //añadimos los objetos a las salas
+        
+        Habitacion.addItem("hacha",15);
+        comedor.addItem("casco",20);
+        Sotano.addItem("vela",5);
+        Habitacion.addItem("cama",50);
+        Sotano.addItem("botella",1);
+        
         
         
         currentRoom = recibidor;  // start game outside

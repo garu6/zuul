@@ -36,7 +36,7 @@ public class Item
     }
     
     public String DescripcionEntera(){
-        String resultado = "objeto: " + itemDescripcion +  " " + itemPeso +  " " + "kg";
+        String resultado = " --> " + itemDescripcion +  " " + itemPeso +  " " + "kg";
         return resultado;
     }
 }
