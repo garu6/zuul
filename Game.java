@@ -1,4 +1,4 @@
-
+import java.util.Stack;
 import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
@@ -21,6 +21,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+
     private ArrayList<Item> mochila;
     private static final int maximo = 65;
     private int pesoActual;
@@ -32,6 +33,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+ 
         mochila = new ArrayList<>();
         jugador = new Player();
     }
@@ -151,15 +153,12 @@ public class Game
 
         }else if (commandWord.equals("back")){
             jugador.back();
-        }
-        else if (commandWord.equals("take")){
-            take(segundWord);
-        }
-        else if (commandWord.equals("drop")){
-            drop(segundWord);
-        }
-        else if (commandWord.equals("items")){
-            items();
+        }else if (commandWord.equals("take")){
+            jugador.take(segundWord);
+        }else if (commandWord.equals("drop")){
+            jugador.drop(segundWord);
+        }else if (commandWord.equals("items")){
+            jugador.items();
                     }
         return wantToQuit;
     }
@@ -213,85 +212,5 @@ public class Game
     }
 
     
-    /**
-     * metodo que permite coger objetos y guardarlos en la mochila hasta cierto peso
-     */
-
-    private void take(String itemDescriptionFirstWord) 
-    {        
-        Item objeto = null;
-
-        for(Item item : currentRoom.getItems()){
-            if(item.getItemDescripcion().contains(itemDescriptionFirstWord)){
-                objeto = item;
-            }
-        }
-
-        if(objeto != null){
-            if(objeto.getCoger()){
-                if(objeto.getitemPeso() + pesoActual < maximo){
-                    mochila.add(objeto);
-                    currentRoom.getItems().remove(objeto);
-                    pesoActual += objeto.getitemPeso();
-                    System.out.println("Has cogido el objeto: " + objeto.getItemDescripcion() + ".");
-                }
-                else{
-                    System.out.println("El objeto no cabe en tu inventario tue limite son: " + maximo + " kg");
-                }
-            }
-            else{
-                System.out.println("¡No puedes coger el objeto!");
-            }
-        }
-        else{
-            System.out.println("Ese objeto no existe en esta habitacion");
-        }        
-    }
     
-    /**
-     * permite dejar en la sala un objeto de nuestra mochila 
-     */
-    
-    private void drop (String itemDescriptionFirstWord){
-        Item objeto = null;
-
-        for(Item item : mochila){
-            if(item.getItemDescripcion().contains(itemDescriptionFirstWord)){
-                objeto = item;
-            }
-        }
-
-        if(objeto != null){
-            
-                    
-                    currentRoom.getItems().add(objeto);
-                    pesoActual -= objeto.getitemPeso();
-                    mochila.remove(objeto);
-                    System.out.println("Has dejado el objeto: " + objeto.getItemDescripcion() + ".");
-                }
-                else{
-                    System.out.println("El objeto que quieres dejar no se encuentra en tu inventario");
-                }
-         
-        
-        
-    }
-    
-    
-    
-     private void items() 
-    {
-        if(mochila.isEmpty()){
-            System.out.println("Tu inventario está vacío.");
-        }
-        else{
-            System.out.println("Inventario: ");
-            
-            for(Item item : mochila){
-                System.out.println(item. DescripcionEntera());
-            }            
-            
-            System.out.println("Peso total: " + pesoActual + " kg");
-        }
-    }
 }
