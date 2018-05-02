@@ -37,13 +37,13 @@ public class Game
         Room recibidor, cocina, baño, comedor, Habitacion, Despensa, Sotano;
       
         // create the rooms
-        recibidor = new Room("en el recibidor de la casa");
-        cocina = new Room("en la cocina de la casa");
-        baño = new Room("en el baño de la casa");
-        comedor = new Room("en el  comedor de la casa");
-        Habitacion = new Room("en la habitacion de la casa");
-        Despensa = new Room ("en la despensa de la casa");
-        Sotano = new Room ("en el sotano de la casa");
+        recibidor = new Room("en el recibidor de la casa",null);
+        cocina = new Room("en la cocina de la casa",null);
+        baño = new Room("en el baño de la casa",null);
+        comedor = new Room("en el  comedor de la casa",null);
+        Habitacion = new Room("en la habitacion de la casa",new Item("hacha",15));
+        Despensa = new Room ("en la despensa de la casa",null);
+        Sotano = new Room ("en el sotano de la casa",new Item("vela", 5));
         
         // initialise room exits
         recibidor.setExit("east",cocina);

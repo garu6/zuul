@@ -17,7 +17,7 @@ import java.util.Set;
 public class Room 
 {
     private String description;
-    
+    private Item objetos;
     private HashMap <String,Room> salidas;
     
     /**
@@ -26,9 +26,10 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, Item objeto) 
     {
         this.description = description;
+        objetos = objeto;
         salidas = new HashMap<>();
     }
 
@@ -80,9 +81,10 @@ public class Room
   * @return A description of the room, including exits.
   */
  public String getLongDescription(){
-        return "Tu estas " + getDescription() + ".\n" + getExitString();
+      String itemLongDescription = (objetos == null)?"":objetos.DescripcionEntera();
+      return "Tu estas " + getDescription() + ".\n" + getExitString() + ".\n" + itemLongDescription;
+    }       
+
      
-     
-       
-    }
 }
+
