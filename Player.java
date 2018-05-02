@@ -135,9 +135,7 @@ public class Player
                 else{
                     System.out.println("El objeto que quieres dejar no se encuentra en tu inventario");
                 }
-         
-        
-        
+                        
     }
     
     
