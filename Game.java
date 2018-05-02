@@ -1,4 +1,4 @@
-import java.util.Stack;
+
 import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
@@ -21,10 +21,10 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Stack<Room>salasPasadas;
     private ArrayList<Item> mochila;
     private static final int maximo = 65;
     private int pesoActual;
+    private Player jugador;
     /**
      * Create the game and initialise its internal map.
      */
@@ -32,9 +32,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        salasPasadas = new Stack<>();
         mochila = new ArrayList<>();
-
+        jugador = new Player();
     }
 
     /**
@@ -83,7 +82,7 @@ public class Game
         comedor.addItem("mesa",50,true);
         comedor.addItem("silla",10,false);
 
-        currentRoom = recibidor;  // start game outside
+        jugador.setCurrentRoom(recibidor); // start game outside
     }
 
     /**
@@ -114,7 +113,7 @@ public class Game
         System.out.println("El mundo de zuul es un nuevo, juego de aventuras increiblemente aburrido");
         System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        printLocationInfo();
+        jugador.look();
     }
 
     /**
@@ -144,19 +143,22 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")){
-            look();
+            jugador.look();
 
         }
         else if (commandWord.equals("eat")){
-            eat();
+            jugador.eat();
 
         }else if (commandWord.equals("back")){
-            back();
-        }else if (commandWord.equals("take")){
+            jugador.back();
+        }
+        else if (commandWord.equals("take")){
             take(segundWord);
-        }else if (commandWord.equals("drop")){
+        }
+        else if (commandWord.equals("drop")){
             drop(segundWord);
-        }else if (commandWord.equals("items")){
+        }
+        else if (commandWord.equals("items")){
             items();
                     }
         return wantToQuit;
@@ -191,18 +193,7 @@ public class Game
 
         String direction = command.getSecondWord();
 
-        // Try to leave current room.
-
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("Aqui no hay puerta estas atrapado");
-        }
-        else {
-            salasPasadas.push(currentRoom);
-            currentRoom = nextRoom;
-            printLocationInfo();
-        }
+        jugador.goRoom(direction);
     }
 
     /** 
@@ -221,40 +212,7 @@ public class Game
         }
     }
 
-    private void printLocationInfo(){
-        System.out.println(currentRoom.getLongDescription());
-
-        System.out.println();
-
-    }
-
-    private void look(){
-        System.out.println(currentRoom.getLongDescription());
-
-    }
-
-    private void eat(){
-        System.out.println("acabas de comer y ya no tienes hambre");
-
-    }
-
-    /**
-     * Metodo que devuelve al jugador a la ultima sala en la que estuvo.
-     * al llegar a la sala inicial 
-     * avisa de que no es posible llevar a cabo la accion.
-     */
-    private void back() 
-    {
-        if(salasPasadas.empty()){
-            System.out.println("¡No puedes volver atrás,estas en el comienzo del juego!"); 
-        }
-        else{
-            currentRoom = salasPasadas.pop();
-
-            printLocationInfo();
-        }
-
-    }
+    
     /**
      * metodo que permite coger objetos y guardarlos en la mochila hasta cierto peso
      */
