@@ -8,12 +8,15 @@ public class Player
     private Room currentRoom;   //  La sala en la que se encuentra el jugador
     private Stack<Room> enteredRooms;   //  Stack de las salas visitadas por el jugador durante la partida
     private ArrayList<Item> mochila;
+    int maximo;
     int pesoActual;
     /**
      * Constructor de la clase Player
-     */    public Player(){
+     */    
+    public Player(int maximo){
         enteredRooms = new Stack<>();
         mochila = new ArrayList<>();
+        this.maximo = maximo;
     }
 
     /**
@@ -84,7 +87,7 @@ public class Player
     public void eat(){
         System.out.println("Has comido algo y ya no estás hambriento.");
     }
-    
+
     public void take(String itemDescriptionFirstWord) 
     {        
         Item objeto = null;
@@ -97,24 +100,30 @@ public class Player
 
         if(objeto != null){
             if(objeto.getCoger()){
+                if (objeto.getitemPeso() + pesoActual < maximo){
                     mochila.add(objeto);
                     currentRoom.getItems().remove(objeto);
                     pesoActual += objeto.getitemPeso();
                     System.out.println("Has cogido el objeto: " + objeto.getItemDescripcion() + ".");            
-            }
-            else{
+                }else{
+                    System.out.println("¡El objeto no cabe en tu inventario!");
+                }
+
+            }else{
                 System.out.println("¡No puedes coger el objeto!");
             }
-        }
-        else{
+
+        }else{
             System.out.println("Ese objeto no existe en esta habitacion");
-        }        
-    }
-    
+
+        }
+
+    }   
+
     /**
      * permite dejar en la sala un objeto de nuestra mochila 
      */
-    
+
     public void drop (String itemDescriptionFirstWord){
         Item objeto = null;
 
@@ -125,21 +134,18 @@ public class Player
         }
 
         if(objeto != null){
-            
-                    
-                    currentRoom.getItems().add(objeto);
-                    pesoActual -= objeto.getitemPeso();
-                    mochila.remove(objeto);
-                    System.out.println("Has dejado el objeto: " + objeto.getItemDescripcion() + ".");
-                }
-                else{
-                    System.out.println("El objeto que quieres dejar no se encuentra en tu inventario");
-                }
-                        
+
+            currentRoom.getItems().add(objeto);
+            pesoActual -= objeto.getitemPeso();
+            mochila.remove(objeto);
+            System.out.println("Has dejado el objeto: " + objeto.getItemDescripcion() + ".");
+        }
+        else{
+            System.out.println("El objeto que quieres dejar no se encuentra en tu inventario");
+        }
+
     }
-    
-    
-    
+
     public void items() 
     {
         if(mochila.isEmpty()){
@@ -147,15 +153,13 @@ public class Player
         }
         else{
             System.out.println("Inventario: ");
-            
+
             for(Item item : mochila){
                 System.out.println(item. DescripcionEntera());
             }            
-            
-            
+
             System.out.println("Peso total: " + pesoActual + " kg");
         }
     }
-    
-    
+
 } 

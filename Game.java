@@ -35,7 +35,7 @@ public class Game
         parser = new Parser();
  
         mochila = new ArrayList<>();
-        jugador = new Player();
+        jugador = new Player(65);
     }
 
     /**
