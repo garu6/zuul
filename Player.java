@@ -8,8 +8,11 @@ public class Player
     private Room currentRoom;   //  La sala en la que se encuentra el jugador
     private Stack<Room> enteredRooms;   //  Stack de las salas visitadas por el jugador durante la partida
     private ArrayList<Item> mochila;
-    int maximo;
-    int pesoActual;
+    private int maximo;
+    private int pesoActual;
+    //poder especialque hace que el jugador pueda equipar cualquier objeto que se encuentre en la sala
+    // se activa una vez cojes un objeto especial en una habitacion
+    private boolean poder;
     /**
      * Constructor de la clase Player
      */    
@@ -17,6 +20,7 @@ public class Player
         enteredRooms = new Stack<>();
         mochila = new ArrayList<>();
         this.maximo = maximo;
+        poder=false;
     }
 
     /**
@@ -59,9 +63,11 @@ public class Player
      * Muestra por pantalla la informacion detallada de la sala actual y sus 
      * salidas.
      */
-    public void look() 
-    {
+    public void look(){
         System.out.println(currentRoom.getLongDescription());
+
+        System.out.println();
+
     }
 
     /**
@@ -99,7 +105,7 @@ public class Player
         }
 
         if(objeto != null){
-            if(objeto.getCoger()){
+            if(objeto.getCoger() || poder) {
                 if (objeto.getitemPeso() + pesoActual < maximo){
                     mochila.add(objeto);
                     currentRoom.getItems().remove(objeto);
@@ -160,6 +166,49 @@ public class Player
 
             System.out.println("Peso total: " + pesoActual + " kg");
         }
+        
+        
     }
+    
+    /**
+     * metodo que al equiparte la chaqueta de bombero permite poder coger todos los objetos que te 
+     * encuentres en las salas
+     */
+    
+    
+    public void equip(String itemDescriptionFirstWord){
+        
 
+        if(itemDescriptionFirstWord != null){
+            if (itemDescriptionFirstWord.equals("chaqueta")){
+                if (mochila.isEmpty()){
+                System.out.println("no tienes nada en tu inventario");
+            }else if (poder){
+                System.out.println("ya lo tienes equipado loco");
+            }
+            else{
+            boolean searching = true;
+            
+            for (int i =0; i < mochila.size() && searching; i++){
+                if (mochila.get(i).getItemDescripcion().equals("chaqueta")){
+                    mochila.remove(mochila.get(i));
+                    poder = true;
+                    System.out.println("Has cogido el objeto especial, ahora puedes coger cualquier objeto que necuentres en las salas");            
+                }else{
+                    System.out.println("¡El objeto no cabe en tu inventario!");
+                }
+
+            }
+        }   
+        }
+    
+        }else{
+            System.out.println("Ese objeto no existe en esta habitacion");
+
+        }
+
+        
+        
+        
+    }
 } 
