@@ -21,7 +21,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-
+    private Stack<Room>salasPasadas;
     private ArrayList<Item> mochila;
     private static final int maximo = 65;
     private int pesoActual;
@@ -31,17 +31,15 @@ public class Game
      */
     public Game() 
     {
-        createRooms();
+        createPlayer();
         parser = new Parser();
- 
-        mochila = new ArrayList<>();
-        jugador = new Player(65);
+        
     }
 
     /**
      * Create all the rooms and link their exits together.
      */
-    private void createRooms()
+    private Room createRooms()
     {
         Room recibidor, cocina, baño, comedor, Habitacion, Despensa, Sotano;
 
@@ -83,10 +81,22 @@ public class Game
         comedor.addItem("casco",20,true);
         comedor.addItem("mesa",50,true);
         comedor.addItem("silla",10,false);
-
-        jugador.setCurrentRoom(recibidor); // start game outside
+        
+        cocina.addItem("chaqueta",2,true);
+        cocina.addItem("nevera",25,true);
+        cocina.addItem("sartenes",5,true);
+        cocina.addItem("tostadora",1,true);
+        
+        
+        return recibidor;  // start game outside
     }
-
+    
+    private void createPlayer(){
+        jugador = new Player(65);
+        jugador.setCurrentRoom(createRooms());
+    }
+    
+    
     /**
      *  Main play routine.  Loops until end of play.
      */
@@ -151,15 +161,22 @@ public class Game
         else if (commandWord.equals("eat")){
             jugador.eat();
 
-        }else if (commandWord.equals("back")){
+        }
+        else if (commandWord.equals("back")){
             jugador.back();
-        }else if (commandWord.equals("take")){
+        }
+        else if (commandWord.equals("take")){
             jugador.take(segundWord);
-        }else if (commandWord.equals("drop")){
+        }
+        else if (commandWord.equals("drop")){
             jugador.drop(segundWord);
-        }else if (commandWord.equals("items")){
+        }
+        else if (commandWord.equals("items")){
             jugador.items();
-                    }
+        }
+        else if (commandWord.equals("equip")){
+            jugador.equip(segundWord);
+        }
         return wantToQuit;
     }
     // implementations of user commands:
@@ -191,7 +208,7 @@ public class Game
         }
 
         String direction = command.getSecondWord();
-
+        
         jugador.goRoom(direction);
     }
 
@@ -211,6 +228,6 @@ public class Game
         }
     }
 
-    
+
     
 }
